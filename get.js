@@ -27,6 +27,7 @@ async function retrieveAndWriteToJson() {
     // Access the collection
     const collection = db.collection('myCollection'); // Replace with your collection name
 
+    
     // Retrieve documents from the collection
     const documents = await collection.find({}).toArray();
 
@@ -42,7 +43,7 @@ async function retrieveAndWriteToJson() {
     await client.close();
     console.log('Disconnected from MongoDB');
   }
-}
+} 
 
 // Call the function to connect to the database, retrieve documents, and write them to a JSON file
 retrieveAndWriteToJson();
