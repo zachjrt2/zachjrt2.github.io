@@ -1,8 +1,9 @@
 const { MongoClient } = require('mongodb');
 const fs = require('fs'); // Node.js file system module
+require('dotenv').config(); // Load environment variables from .env file
 
-// Connection URI
-const uri = 'mongodb://localhost:27017'; // Replace with your MongoDB URI
+// MongoDB URI from environment variables
+const uri = process.env.MONGODB_URI;
 
 // Database Name
 const dbName = 'myDatabase'; // Replace with your database name
