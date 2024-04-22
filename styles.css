@@ -1,0 +1,39 @@
+body {
+    background-color: #222;
+    color: #fff;
+  }
+  
+  .navbar {
+    background-color: #333;
+  }
+  
+  .navbar .navbar-nav .nav-link {
+    color: #fff;
+  }
+  
+  .hero {
+    background-color: #111;
+    padding: 100px 0;
+  }
+  
+  .hero h1, .hero p {
+    color: #fff;
+  }
+  
+  .about {
+    background-color: #222;
+    padding: 100px 0;
+  }
+  
+  .about h2, .about p {
+    color: #fff;
+  }
+  
+  .footer {
+    padding: 30px 0;
+  }
+  
+  .footer p {
+    color: #fff;
+  }
+  
