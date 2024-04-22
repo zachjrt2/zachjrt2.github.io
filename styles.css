@@ -57,3 +57,20 @@ body {
   a:hover {
     color: #87CEEB; /* hover color */
   }
+  .card {
+    border: 1px solid #555; /* Dark gray border */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #444; /* Dark gray background */
+    color: #fff; /* White text */
+  }
+
+  #cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
