@@ -40,9 +40,9 @@
 <section class="hero">
   <div class="container text-center">
     <h1>Items</h1>
-    <p>Check up on your items</p>
     <h6>Most Items</h6>
     <div id="mostCommonDisplayNameContainer"></div>
+    <h6>Most Valuable Item(s)</h6>
     <div id="highestEventRedeemValueContainer"></div>
     
   </div>
@@ -307,7 +307,7 @@ function findHighestEventRedeemValueAndDisplay(dataArray) {
   });
 
   // Create a string to display the tied values
-  let displayText = "Highest Event Redeem Value(s):";
+  let displayText = "";
   tiedValues.forEach(item => {
     displayText += `\n${item.DisplayName} : ${item.EventRedeemValue}`;
   });
