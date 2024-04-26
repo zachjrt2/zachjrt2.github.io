@@ -75,6 +75,25 @@ body {
    transition: 0.2s; 
   }
 
+  .cardItem {
+    border: 1px solid #555; /* Dark gray border */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #444; /* Dark gray background */
+    color: #fff; /* White text */
+    transition: 0.2s; 
+  }
+
+  .cardItem:hover {
+   scale: 110%;
+   transition: 0.2s; 
+  }
+
+
   #cardContainer {
     display: flex;
     flex-wrap: wrap;

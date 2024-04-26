@@ -70,11 +70,12 @@ async function fetchDataAndCreateCards() {
       DisplayName: item.DisplayName,
       UserPlatform: item.UserPlatform,
       UserId: item.UserID,
-      Address: item.Address,
+      
       CreationTime: item.CreationTime,
       EventType: item.EventType,
       EventRedeemValue: item.EventRedeemValue,
       TimeModifier: item.TimeModifier,
+      Address: item.Address,
       PositionX: item.PositionX,
       PositionY: item.PositionY,
       PositionZ: item.PositionZ,
@@ -111,11 +112,13 @@ function createCards(dataArray) {
   dataArray.forEach(item => {
     // Create a div element for the card
     const card = document.createElement('div');
-    card.classList.add('card');
+    card.classList.add('cardItem');
 
     const positionField = document.createElement('div');
     const rotationField = document.createElement('div');
     const creationTimeField = document.createElement('div');
+    const addressImage = document.createElement('img'); // Create image element for address
+
     positionField.classList.add('position-field'); // Add class for styling if needed
     rotationField.classList.add('rotation-field'); // Add class for styling if needed
     creationTimeField.classList.add('creation-time-field'); // Add class for styling if needed
@@ -146,8 +149,11 @@ function createCards(dataArray) {
             break;
           // Add additional cases for other fields
           case 'Address':
-          field.textContent = `Type: ${item[key]}`;
-          break;
+            // Set image source based on the value of Address field
+            addressImage.src = `./img/${item[key]}.png`;
+            addressImage.alt = `${item[key]}`; // Set alt attribute
+            field.textContent = `${key}: ${item[key]}`;
+            break;
           case 'CreationTime':
           const creationTime = new Date(item[key]);
             field.textContent = `Created: ${creationTime.toLocaleString()}`;
@@ -156,26 +162,34 @@ function createCards(dataArray) {
           //case 'UserId':
           case 'DisplayName':
           case 'EventType':
-          case 'EventRedeemValue':
+          field.textContent = `${key}: ${item[key]}`;
+            break;
           case 'TimeModifier':
           //case 'ImageUrl':
-            field.textContent = `${key}: ${item[key]}`;
+            field.textContent = `Repaired Time: ${item[key]}`;
             break;
-          
+          case 'EventRedeemValue':
+            field.textContent = `Value: ${item[key]}`;
+            break;
+
           case 'PositionX':
           case 'PositionY':
+          const roundedValueXY = parseFloat(item[key]).toFixed(5);
+            positionField.textContent += `${roundedValueXY}, `;
+            break;
           case 'PositionZ':
-          const roundedValue = parseFloat(item[key]).toFixed(5);
-            positionField.textContent += `${roundedValue} |`;
+          const roundedValueZ = parseFloat(item[key]).toFixed(5);
+            positionField.textContent += `${roundedValueZ} `;
             break;
           case 'RotationX':
           case 'RotationY':
-          case 'RotationZ':
-          const roundedValue2 = parseFloat(item[key]).toFixed(5);
-            rotationField.textContent += `${roundedValue2} |`;
-            
+          const roundedValueXY2 = parseFloat(item[key]).toFixed(5);
+            rotationField.textContent += `${roundedValueXY2}, `;
             break;
-         
+          case 'RotationZ':
+          const roundedValueZ2 = parseFloat(item[key]).toFixed(5);
+            rotationField.textContent += `${roundedValueZ2} `;
+            break;
           default:
             // Handle other fields if needed
             break;
@@ -186,9 +200,11 @@ function createCards(dataArray) {
       }
     }
 
+    card.appendChild(addressImage);
     card.appendChild(positionField);
     card.appendChild(rotationField);
     card.appendChild(creationTimeField);
+    
   
   
     // Append the card to the container
