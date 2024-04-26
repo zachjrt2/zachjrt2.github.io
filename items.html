@@ -191,22 +191,28 @@ function createCards(dataArray) {
             break;
 
           case 'PositionX':
+          const roundedValueX = parseFloat(item[key]).toFixed(5);
+            positionField.textContent += `${roundedValueX}x, `;
+            break;
           case 'PositionY':
-          const roundedValueXY = parseFloat(item[key]).toFixed(5);
-            positionField.textContent += `${roundedValueXY}, `;
+          const roundedValueY = parseFloat(item[key]).toFixed(5);
+            positionField.textContent += `${roundedValueY}y, `;
             break;
           case 'PositionZ':
           const roundedValueZ = parseFloat(item[key]).toFixed(5);
-            positionField.textContent += `${roundedValueZ} `;
+            positionField.textContent += `${roundedValueZ}z `;
             break;
           case 'RotationX':
+          const roundedValueX2 = parseFloat(item[key]).toFixed(5);
+            rotationField.textContent += `${roundedValueX2}x, `;
+            break;
           case 'RotationY':
-          const roundedValueXY2 = parseFloat(item[key]).toFixed(5);
-            rotationField.textContent += `${roundedValueXY2}, `;
+          const roundedValueY2 = parseFloat(item[key]).toFixed(5);
+            rotationField.textContent += `${roundedValueY2}y, `;
             break;
           case 'RotationZ':
           const roundedValueZ2 = parseFloat(item[key]).toFixed(5);
-            rotationField.textContent += `${roundedValueZ2} `;
+            rotationField.textContent += `${roundedValueZ2}z `;
             break;
           default:
             // Handle other fields if needed
