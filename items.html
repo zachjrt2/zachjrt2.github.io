@@ -107,6 +107,9 @@ function createCards(dataArray) {
   
   // Clear out the contents of cardContainer
   cardContainer.innerHTML = '';
+
+  const eventTypeEnum = ['Bits', 'Donation', 'Subscription', 'GiftedSubscription', 'ChannelPoints'];
+
   
   // Iterate over the data array
   dataArray.forEach(item => {
@@ -162,8 +165,10 @@ function createCards(dataArray) {
           //case 'UserId':
           case 'DisplayName':
           case 'EventType':
-          field.textContent = `${key}: ${item[key]}`;
+            // Get the EventType string from the eventTypeEnum array using the index
+            field.textContent = `Event Type: ${eventTypeEnum[item[key]]}`;
             break;
+  
           case 'TimeModifier':
           //case 'ImageUrl':
             field.textContent = `Repaired Time: ${item[key]}`;
