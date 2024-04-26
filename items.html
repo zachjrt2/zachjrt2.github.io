@@ -41,6 +41,10 @@
   <div class="container text-center">
     <h1>Items</h1>
     <p>Check up on your items</p>
+    <h6>Most Items</h6>
+    <div id="mostCommonDisplayNameContainer"></div>
+    <div id="highestEventRedeemValueContainer"></div>
+    
   </div>
 </section>
 
@@ -70,7 +74,6 @@ async function fetchDataAndCreateCards() {
       DisplayName: item.DisplayName,
       UserPlatform: item.UserPlatform,
       UserId: item.UserID,
-      
       CreationTime: item.CreationTime,
       EventType: item.EventType,
       EventRedeemValue: item.EventRedeemValue,
@@ -93,6 +96,8 @@ async function fetchDataAndCreateCards() {
 
     // Call createCards with the extracted data
     createCards(dataArray);
+    findMostCommonDisplayNameAndDisplay(dataArray);
+    findHighestEventRedeemValueAndDisplay(dataArray);
 
     // Call sorting functions after data is fetched and cards are created
     attachEventListeners();
@@ -284,6 +289,67 @@ function sortByCreationTime(dataArray) {
 function sortByEventType(dataArray) {
   return dataArray.slice().sort((a, b) => b.EventType - a.EventType);
 }
+
+function findHighestEventRedeemValueAndDisplay(dataArray) {
+  // Find the highest EventRedeemValue
+  let highestValue = Number.MIN_SAFE_INTEGER;
+  const tiedValues = [];
+
+  dataArray.forEach(item => {
+    const redeemValue = item.EventRedeemValue;
+    if (redeemValue > highestValue) {
+      highestValue = redeemValue;
+      tiedValues.length = 0; // Clear previous ties if any
+      tiedValues.push(item);
+    } else if (redeemValue === highestValue) {
+      tiedValues.push(item);
+    }
+  });
+
+  // Create a string to display the tied values
+  let displayText = "Highest Event Redeem Value(s):";
+  tiedValues.forEach(item => {
+    displayText += `\n${item.DisplayName} : ${item.EventRedeemValue}`;
+  });
+
+  // Get the container div
+  const container = document.getElementById('highestEventRedeemValueContainer');
+
+  // Set the text content of the container div
+  container.textContent = displayText;
+}
+
+
+function findMostCommonDisplayNameAndDisplay(dataArray) {
+  // Create an object to store the count of each DisplayName
+  const displayNameCount = {};
+
+  // Iterate over the dataArray and count occurrences of each DisplayName
+  dataArray.forEach(item => {
+    const displayName = item.DisplayName;
+    displayNameCount[displayName] = (displayNameCount[displayName] || 0) + 1;
+  });
+
+  // Find the most common DisplayName
+  let mostCommonDisplayName = '';
+  let maxCount = 0;
+  for (const displayName in displayNameCount) {
+    if (displayNameCount[displayName] > maxCount) {
+      mostCommonDisplayName = displayName;
+      maxCount = displayNameCount[displayName];
+    }
+  }
+
+  // Create a string with the most common DisplayName and its count
+  const mostCommonDisplayNameText = `${mostCommonDisplayName} : ${maxCount}`;
+
+  // Get the container div
+  const container = document.getElementById('mostCommonDisplayNameContainer');
+
+  // Set the text content of the container div
+  container.textContent = mostCommonDisplayNameText;
+}
+
 
 // Call the function to fetch data and create cards when the page loads
 window.onload = () => {
