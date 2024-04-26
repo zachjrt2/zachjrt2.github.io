@@ -53,6 +53,10 @@ body {
     text-decoration: none; /* remove underline */
     transition: color 0.5s; /* half-second transition */
   }
+
+  img{
+    width:100%;
+  }
   
   a:hover {
     color: #87CEEB; /* hover color */
