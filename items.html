@@ -53,7 +53,7 @@
   <div class="container">
     <div class="row">
       <div id="buttonContainer">
-      <button id="sortUserId">Sort by User ID</button>
+      <button id="sortDuration">Sort by Duration</button>
         <button id="sortDisplayName">Sort by Display Name</button>
         <button id="sortAddress">Sort by Object Type</button>
         <button id="sortCreationTime">Sort by Creation Time</button>
@@ -238,11 +238,20 @@ function createCards(dataArray) {
 
 // Function to attach event listeners to sorting buttons
 function attachEventListeners() {
-  document.getElementById('sortUserId').addEventListener('click', () => {
+  // document.getElementById('sortUserId').addEventListener('click', () => {
+  //   if (dataArray) {
+  //     createCards(sortByUserId(dataArray));
+  //   }
+  // });
+
+  document.getElementById('sortDuration').addEventListener('click', () => {
     if (dataArray) {
-      createCards(sortByUserId(dataArray));
+      createCards(sortByDuration(dataArray));
     }
   });
+
+
+  
 
   document.getElementById('sortDisplayName').addEventListener('click', () => {
     if (dataArray) {
@@ -275,6 +284,11 @@ function sortByUserId(dataArray) {
     return String(a.UserId).localeCompare(String(b.UserId));
   });
 }
+
+function sortByDuration(dataArray) {
+  return dataArray.slice().sort((a, b) => b.EventType - a.EventType);
+}
+
 
 // Sort data array by DisplayName
 function sortByDisplayName(dataArray) {
