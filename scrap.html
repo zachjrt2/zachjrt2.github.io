@@ -50,64 +50,58 @@
     <div class="row">
         <div id="cardContainer"></div>
         <script>
-            // Array of data to populate the cards
-            const data = [
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              // Add more objects as needed
-            ];
-          
-            // Function to create HTML cards dynamically
-            function createCards() {
-              const cardContainer = document.getElementById('cardContainer');
-          
-              // Iterate over the data array
-              data.forEach(item => {
-                // Create a div element for the card
-                const card = document.createElement('div');
-                card.classList.add('card');
-          
-                // Create title and content elements
-                const title = document.createElement('h2');
-                title.textContent = item.title;
-          
-                const content = document.createElement('p');
-                content.textContent = item.content;
-          
-                // Append title and content to the card
-                card.appendChild(title);
-                card.appendChild(content);
-          
-                // Append the card to the container
-                cardContainer.appendChild(card);
-              });
-            }
-          
-            // Call the function to create cards when the page loads
-            window.onload = createCards;
+async function fetchDataAndCreateCards() {
+  try {
+    const response = await fetch("https://aiastream.onrender.com/scrap");
+    const data = await response.json();
+
+    // Extracting fields from the API response
+    const dataArray = data.map(item => ({
+      UserId: item.UserId,
+      DisplayName: item.DisplayName,
+      Platform: item.Platform,
+      ScrapTotal: item.ScrapTotal,
+      ScrapCurrent: item.ScrapCurrent
+    }));
+
+    // Logging the extracted data
+    console.log(dataArray);
+
+    // Call createCards with the extracted data
+    createCards(dataArray);
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+// Function to create HTML cards dynamically
+function createCards(dataArray) {
+  const cardContainer = document.getElementById('cardContainer');
+  
+  // Iterate over the data array
+  dataArray.forEach(item => {
+    // Create a div element for the card
+    const card = document.createElement('div');
+    card.classList.add('card');
+  
+    // Create elements for each field
+    for (const key in item) {
+      if (item.hasOwnProperty(key)) {
+        const field = document.createElement('p');
+        field.textContent = `${key}: ${item[key]}`;
+        card.appendChild(field);
+      }
+    }
+  
+    // Append the card to the container
+    cardContainer.appendChild(card);
+  });
+}
+
+// Call the function to fetch data and create cards when the page loads
+window.onload = fetchDataAndCreateCards;
+
           </script>
 
     </div>

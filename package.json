@@ -2,5 +2,23 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "mongodb": "^6.5.0"
-  }
+  },
+  "name": "zachjrt2.github.io",
+  "description": "",
+  "version": "1.0.0",
+  "main": "get.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zachjrt2/zachjrt2.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zachjrt2/zachjrt2.github.io/issues"
+  },
+  "homepage": "https://github.com/zachjrt2/zachjrt2.github.io#readme"
 }
