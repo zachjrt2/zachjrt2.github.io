@@ -74,6 +74,7 @@ async function fetchDataAndCreateCards() {
       CreationTime: item.CreationTime,
       EventType: item.EventType,
       EventRedeemValue: item.EventRedeemValue,
+      CreationTick: item.CreationTick,
       TimeModifier: item.TimeModifier,
       Address: item.Address,
       PositionX: item.PositionX,
@@ -83,8 +84,8 @@ async function fetchDataAndCreateCards() {
       RotationY: item.RotationY,
       RotationZ: item.RotationZ,
       ImageUrl: item.ImageUrl,
-      UserId: item.UserID,
-      CreationTick: item.CreationTick
+      UserId: item.UserID
+      
     }));
 
     // Logging the extracted data
@@ -155,7 +156,7 @@ function createCards(dataArray) {
             // Set image source based on the value of Address field
             addressImage.src = `./img/${item[key]}.png`;
             addressImage.alt = `${item[key]}`; // Set alt attribute
-            field.textContent = `${key}: ${item[key]}`;
+            field.textContent = `Type: ${item[key]}`;
             break;
           case 'CreationTime':
           const creationTime = new Date(item[key]);
