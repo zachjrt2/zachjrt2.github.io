@@ -52,12 +52,13 @@
 <section class="cards">
   <div class="container">
     <div class="row">
-      <div id="buttonContainer">
+      <div id="buttonContainerItem">
       <button id="sortDuration">Sort by Duration</button>
         <button id="sortDisplayName">Sort by Display Name</button>
         <button id="sortAddress">Sort by Object Type</button>
         <button id="sortCreationTime">Sort by Creation Time</button>
         <button id="sortEventType">Sort by Event Type</button>
+        <button id="sortValue">Sort by Value</button>
       </div>
         <div id="cardContainer"></div>
         <script>
@@ -250,7 +251,11 @@ function attachEventListeners() {
     }
   });
 
-
+  document.getElementById('sortValue').addEventListener('click', () => {
+    if (dataArray) {
+      createCards(sortByValue(dataArray));
+    }
+  });
   
 
   document.getElementById('sortDisplayName').addEventListener('click', () => {
@@ -287,6 +292,10 @@ function sortByUserId(dataArray) {
 
 function sortByDuration(dataArray) {
   return dataArray.slice().sort((a, b) => b.EventType - a.EventType);
+}
+
+function sortByValue(dataArray) {
+  return dataArray.slice().sort((a, b) => b.EventRedeemValue - a.EventRedeemValue);
 }
 
 
