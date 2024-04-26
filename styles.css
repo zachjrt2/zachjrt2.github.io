@@ -67,6 +67,12 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #444; /* Dark gray background */
     color: #fff; /* White text */
+    transition: 0.2s; 
+  }
+
+  .card:hover {
+   scale: 110%;
+   transition: 0.2s; 
   }
 
   #cardContainer {
@@ -74,3 +80,61 @@ body {
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .display-name{
+    font-size: 130%;
+    font-weight: bold;
+  }
+
+  .user-id {
+    color: blue;
+  }
+  
+  .platform {
+    font-style: italic;
+  }
+  
+  .scrap-total:hover {
+    color: #bbb;
+    transition: color 0.5s;
+  }
+  
+  .scrap-current:hover {
+    color: #bbb;
+    transition: color 0.5s; 
+  }
+
+/* Styles for button container */
+#buttonContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap to the next line on smaller screens */
+  justify-content: space-between;
+  background-color: #222;
+  padding: 10px;
+  width: 100%;
+}
+
+/* Styles for buttons */
+#buttonContainer button {
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  margin-bottom: 10px; /* Add space between buttons */
+  cursor: pointer;
+  width: 20%;
+  transition: background-color 0.3s ease;
+}
+
+#buttonContainer button:hover {
+  background-color: #555;
+}
+
+/* Media query for mobile responsiveness */
+@media screen and (max-width: 600px) {
+  /* Adjust button width for smaller screens */
+  #buttonContainer button {
+    width: 100%; /* Make buttons span full width */
+  }
+}
