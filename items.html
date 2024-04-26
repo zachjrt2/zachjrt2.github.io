@@ -161,9 +161,16 @@ function createCards(dataArray) {
           const creationTime = new Date(item[key]);
             field.textContent = `Created: ${creationTime.toLocaleString()}`;
             break;
-          //case 'CreationTick':
+            case 'CreationTick':
+            // Convert CreationTick to readable time format
+            const ticks = item[key];
+            const seconds = ticks / 60;
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            field.textContent = `Duration: ${hours}h:${minutes}m:${remainingSeconds}s`;
+            break;
           //case 'UserId':
-          case 'DisplayName':
           case 'EventType':
             // Get the EventType string from the eventTypeEnum array using the index
             field.textContent = `Event Type: ${eventTypeEnum[item[key]]}`;
