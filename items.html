@@ -45,84 +45,228 @@
 </section>
 
 <!-- About Section -->
-<section class="about">
+<section class="cards">
   <div class="container">
     <div class="row">
+      <div id="buttonContainer">
+      <button id="sortUserId">Sort by User ID</button>
+        <button id="sortDisplayName">Sort by Display Name</button>
+        <button id="sortAddress">Sort by Object Type</button>
+        <button id="sortCreationTime">Sort by Creation Time</button>
+        <button id="sortEventType">Sort by Event Type</button>
+      </div>
         <div id="cardContainer"></div>
         <script>
-            // Array of data to populate the cards
-            const data = [
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              { title: 'Card 1', content: 'This is the content of card 1.' },
-              { title: 'Card 2', content: 'This is the content of card 2.' },
-              { title: 'Card 3', content: 'This is the content of card 3.' },
-              { title: 'Card 4', content: 'This is the content of card 4.' },
-              { title: 'Card 5', content: 'This is the content of card 5.' },
-              // Add more objects as needed
-            ];
+       let dataArray; // Define dataArray in the global scope
+
+// Function to fetch data from the API and create cards
+async function fetchDataAndCreateCards() {
+  try {
+    const response = await fetch("https://aiastream.onrender.com/item");
+    const data = await response.json();
+
+    // Extracting fields from the API response
+    dataArray = data.map(item => ({
+      DisplayName: item.DisplayName,
+      UserPlatform: item.UserPlatform,
+      UserId: item.UserID,
+      Address: item.Address,
+      CreationTime: item.CreationTime,
+      EventType: item.EventType,
+      EventRedeemValue: item.EventRedeemValue,
+      TimeModifier: item.TimeModifier,
+      PositionX: item.PositionX,
+      PositionY: item.PositionY,
+      PositionZ: item.PositionZ,
+      RotationX: item.RotationX,
+      RotationY: item.RotationY,
+      RotationZ: item.RotationZ,
+      ImageUrl: item.ImageUrl,
+      UserId: item.UserID,
+      CreationTick: item.CreationTick
+    }));
+
+    // Logging the extracted data
+    console.log(dataArray);
+
+    // Call createCards with the extracted data
+    createCards(dataArray);
+
+    // Call sorting functions after data is fetched and cards are created
+    attachEventListeners();
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+// Function to create HTML cards dynamically
+function createCards(dataArray) {
+  const cardContainer = document.getElementById('cardContainer');
+  
+  // Clear out the contents of cardContainer
+  cardContainer.innerHTML = '';
+  
+  // Iterate over the data array
+  dataArray.forEach(item => {
+    // Create a div element for the card
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    const positionField = document.createElement('div');
+    const rotationField = document.createElement('div');
+    const creationTimeField = document.createElement('div');
+    positionField.classList.add('position-field'); // Add class for styling if needed
+    rotationField.classList.add('rotation-field'); // Add class for styling if needed
+    creationTimeField.classList.add('creation-time-field'); // Add class for styling if needed
+
+
+
+    positionField.textContent += `Position: `;
+    rotationField.textContent += `Rotation: `;
+
+  
+    // Iterate over each field in the item
+    for (const key in item) {
+      if (item.hasOwnProperty(key)) {
+        // Create a paragraph element for the field
+        const field = document.createElement('div');
+        
+        // Customize the formatting of each field here
+        switch (key) {
+          case 'DisplayName':
+            field.textContent = `${item[key]}`;
+            field.classList.add('display-name'); // Add class based on field name
+            break;
+          case 'UserPlatform':
+            // Display "Twitch" if UserPlatform is 0, "Youtube" if UserPlatform is 1
+            const platformText = item[key] === 0 ? "Twitch" : (item[key] === 1 ? "Youtube" : "");
+            field.textContent = `Platform: ${platformText}`;
+            field.classList.add('platform'); // Add class based on field name
+            break;
+          // Add additional cases for other fields
+          case 'Address':
+          field.textContent = `Type: ${item[key]}`;
+          break;
+          case 'CreationTime':
+          const creationTime = new Date(item[key]);
+            field.textContent = `Created: ${creationTime.toLocaleString()}`;
+            break;
+          //case 'CreationTick':
+          //case 'UserId':
+          case 'DisplayName':
+          case 'EventType':
+          case 'EventRedeemValue':
+          case 'TimeModifier':
+          //case 'ImageUrl':
+            field.textContent = `${key}: ${item[key]}`;
+            break;
           
-            // Function to create HTML cards dynamically
-            function createCards() {
-              const cardContainer = document.getElementById('cardContainer');
-          
-              // Iterate over the data array
-              data.forEach(item => {
-                // Create a div element for the card
-                const card = document.createElement('div');
-                card.classList.add('card');
-          
-                // Create title and content elements
-                const title = document.createElement('h2');
-                title.textContent = item.title;
-          
-                const content = document.createElement('p');
-                content.textContent = item.content;
-          
-                // Append title and content to the card
-                card.appendChild(title);
-                card.appendChild(content);
-          
-                // Append the card to the container
-                cardContainer.appendChild(card);
-              });
-            }
-          
-            // Call the function to create cards when the page loads
-            window.onload = createCards;
+          case 'PositionX':
+          case 'PositionY':
+          case 'PositionZ':
+          const roundedValue = parseFloat(item[key]).toFixed(5);
+            positionField.textContent += `${roundedValue} |`;
+            break;
+          case 'RotationX':
+          case 'RotationY':
+          case 'RotationZ':
+          const roundedValue2 = parseFloat(item[key]).toFixed(5);
+            rotationField.textContent += `${roundedValue2} |`;
+            
+            break;
+         
+          default:
+            // Handle other fields if needed
+            break;
+        }
+        
+        // Append the field to the card
+        card.appendChild(field);
+      }
+    }
+
+    card.appendChild(positionField);
+    card.appendChild(rotationField);
+    card.appendChild(creationTimeField);
+  
+  
+    // Append the card to the container
+    cardContainer.appendChild(card);
+  });
+}
+
+// Function to attach event listeners to sorting buttons
+function attachEventListeners() {
+  document.getElementById('sortUserId').addEventListener('click', () => {
+    if (dataArray) {
+      createCards(sortByUserId(dataArray));
+    }
+  });
+
+  document.getElementById('sortDisplayName').addEventListener('click', () => {
+    if (dataArray) {
+      createCards(sortByDisplayName(dataArray));
+    }
+  });
+
+  document.getElementById('sortAddress').addEventListener('click', () => {
+    if (dataArray) {
+      createCards(sortByAddress(dataArray));
+    }
+  });
+
+  document.getElementById('sortCreationTime').addEventListener('click', () => {
+    if (dataArray) {
+      createCards(sortByCreationTime(dataArray));
+    }
+  });
+
+  document.getElementById('sortEventType').addEventListener('click', () => {
+    if (dataArray) {
+      createCards(sortByEventType(dataArray));
+    }
+  });
+}
+
+// Sort data array by UserId
+function sortByUserId(dataArray) {
+  return dataArray.slice().sort((a, b) => {
+    return String(a.UserId).localeCompare(String(b.UserId));
+  });
+}
+
+// Sort data array by DisplayName
+function sortByDisplayName(dataArray) {
+  return dataArray.slice().sort((a, b) => a.DisplayName.localeCompare(b.DisplayName));
+}
+
+// Sort data array by Platform
+function sortByAddress(dataArray) {
+  return dataArray.slice().sort((a, b) => a.Address.localeCompare(b.Address));
+}
+
+// Sort data array by ScrapTotal
+function sortByCreationTime(dataArray) {
+  return dataArray.slice().sort((a, b) => b.CreationTime - a.CreationTime);
+}
+
+// Sort data array by ScrapCurrent
+function sortByEventType(dataArray) {
+  return dataArray.slice().sort((a, b) => b.EventType - a.EventType);
+}
+
+// Call the function to fetch data and create cards when the page loads
+window.onload = () => {
+  fetchDataAndCreateCards();
+};
+
           </script>
 
     </div>
   </div>
 </section>
+
 
 <!-- Footer -->
 <footer class="footer bg-dark text-white text-center">
