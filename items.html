@@ -73,6 +73,7 @@ async function fetchDataAndCreateCards() {
 
     // Extracting fields from the API response
     dataArray = data.map(item => ({
+      ItemId: item.ItemId,
       DisplayName: item.DisplayName,
       UserPlatform: item.UserPlatform,
       UserId: item.UserID,
@@ -191,7 +192,9 @@ function createCards(dataArray) {
           case 'EventRedeemValue':
             field.textContent = `Value: ${item[key]}`;
             break;
-
+          case 'ItemId':
+            field.textContent = `ID: ${item[key]}`;
+            break;
           case 'PositionX':
           const roundedValueX = parseFloat(item[key]).toFixed(5);
             positionField.textContent += `${roundedValueX}x, `;
